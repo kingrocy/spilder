@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds" debug="false">
+
+    <contextName>logback</contextName>
+
+    <appender name="APPLICATION" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%date %-7([%level]) [%file:%line] %msg%n%ex</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>./logs/comic.log.%d{yyyy-MM-dd}</FileNamePattern>
+            <maxHistory>7</maxHistory>
+            <CleanHistoryOnStart>true</CleanHistoryOnStart>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date %-7([%level]) [%file:%line] %msg%n%ex</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <springProperty name="logging.root.level" scope="context" source="logging.root.level"/>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="APPLICATION"/>
+    </root>
+
+    <appender name="comicSpilderAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <Pattern>%date  [%file:%line]  %msg%n</Pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>./logs/comic-spilder.log.%d{yyyy-MM-dd}</FileNamePattern>
+            <maxHistory>7</maxHistory>
+            <CleanHistoryOnStart>true</CleanHistoryOnStart>
+        </rollingPolicy>
+    </appender>
+
+
+    <logger name="spilder-logger" additivity="false">
+        <level code="info"/>
+        <appender-ref ref="comicSpilderAppender"/>
+    </logger>
+
+
+</configuration>
