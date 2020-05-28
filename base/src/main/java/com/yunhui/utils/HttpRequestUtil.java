@@ -34,6 +34,15 @@ public class HttpRequestUtil {
 
     private static final String DEFAULT_CHARSET = "UTF-8";
 
+    public static void main(String[] args) {
+
+        String params="{\"access_token\":\"16_dqG2WaNWi2FAyHMV_4LsoTUGRFSAuQmFCOlCnekPxJZ8G9J68LZ7XFTmN1dHuxutMGMze2W7GzeMknRja3mYkqI_v1C9XOA0-2wH04JxinnWJRbgPqWyQlkIk26Xl2q1JUyKvS24_wCen8KZUSHjAFAPNC\",\"page\":\"pages/applied/applied?id=6\",\"scene\":\"kingrocy\"}";
+
+        String result = doPost("https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=16_dqG2WaNWi2FAyHMV_4LsoTUGRFSAuQmFCOlCnekPxJZ8G9J68LZ7XFTmN1dHuxutMGMze2W7GzeMknRja3mYkqI_v1C9XOA0-2wH04JxinnWJRbgPqWyQlkIk26Xl2q1JUyKvS24_wCen8KZUSHjAFAPNC", params);
+
+        System.out.println(result);
+    }
+
     private static String execute(CloseableHttpClient client, HttpUriRequest request) {
         CloseableHttpResponse response = null;
         try {
@@ -48,7 +57,7 @@ public class HttpRequestUtil {
                 logger.error("请求发生错误,state:"+state);
             }
         } catch (Exception e) {
-            logger.error("请求出现异常:" + e.getClass().getName());
+            logger.error("请求出现异常",e);
         } finally {
             if (response != null) {
                 try {
@@ -168,6 +177,10 @@ public class HttpRequestUtil {
         return execute(getHttpClient(cookieStore), new HttpGet(url));
     }
 
+    public static String doGet(String url, HttpUriRequest httpUriRequest) {
+        return execute(getHttpClient(null), httpUriRequest);
+    }
+
     /**
      * http for file download
      * @param url
@@ -188,7 +201,7 @@ public class HttpRequestUtil {
         return execute(HttpClients.createDefault(),new HttpGet(url));
     }
 
-    public static Cookie parseCookie(String cookieName, String cookieValue, String domain){
+    public static Cookie addCookie(String cookieName, String cookieValue, String domain){
         BasicClientCookie cookie=new BasicClientCookie(cookieName, cookieValue);
         cookie.setDomain(domain);
         cookie.setPath("/");

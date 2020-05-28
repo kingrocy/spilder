@@ -23,7 +23,7 @@
 
     <springProperty name="logging.root.level" scope="context" source="logging.root.level"/>
 
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="APPLICATION"/>
     </root>
